@@ -1,6 +1,6 @@
 # Gerenciador de Tarefas
 
-API REST para criar, listar e consultar tarefas por ID.
+API REST para criar, listar, consultar, atualizar e excluir tarefas.
 Projeto de estudo em back-end com Python.
 
 ## Tecnologias
@@ -22,6 +22,8 @@ Projeto de estudo em back-end com Python.
 | POST | /tarefas | Cria uma tarefa |
 | GET | /tarefas | Lista todas as tarefas |
 | GET | /tarefas/{tarefa_id} | Consulta uma tarefa específica pelo ID |
+| PATCH | /tarefas/{tarefa_id} | Atualiza o título de uma tarefa |
+| DELETE | /tarefas/{tarefa_id} | Exclui uma tarefa |
 
 ### Criar uma tarefa
 
@@ -45,14 +47,40 @@ GET /tarefas/1
 
 Se o ID não existir, a API retorna o status `404 Not Found`.
 
+### Atualizar uma tarefa
+
+Envie uma requisição `PATCH` usando o ID da tarefa e o novo título:
+
+```text
+PATCH /tarefas/1
+```
+
+```json
+{
+  "titulo": "Limpar a garagem"
+}
+```
+
+O título deve ter entre 5 e 50 caracteres. Se o ID não existir, a API retorna o status `404 Not Found`.
+
+### Excluir uma tarefa
+
+Envie uma requisição `DELETE` usando o ID da tarefa:
+
+```text
+DELETE /tarefas/1
+```
+
+Se a tarefa for encontrada, a API retorna uma mensagem de sucesso. Se o ID não existir, retorna o status `404 Not Found`.
+
 ## Status do projeto
 - [x] Criar tarefa
 - [x] Listar tarefas
 - [x] Consultar tarefa por ID
-- [ ] Atualizar tarefa
-- [ ] Excluir tarefa
+- [x] Atualizar tarefa
+- [x] Excluir tarefa
 - [ ] Banco de dados (SQLite)
 - [ ] Interface simples
 
 ## Próximos passos
-Implementar as rotas de atualização e exclusão, adicionar persistência com SQLite e, depois, criar uma interface simples.
+Adicionar persistência com SQLite e, depois, criar uma interface simples.
