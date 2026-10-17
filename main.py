@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, Field, field_validator
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
 
 #para rodar o servidor, execute o seguinte comando no terminal: python -m uvicorn main:app --reload
 
@@ -10,9 +10,9 @@ proximo_id = 1
 
 
 class TarefaNova(BaseModel):
-    titulo: str = Field(..., min_length=1, max_length=100)
-#A field_validator() é usado para validar o campo "titulo" da classe TarefaNova
-#Ele garante que o título da tarefa seja uma string com comprimento mínimo de 1 e máximo de 100 caracteres, e fornece uma descrição para documentação da API.
+    titulo: str = Field(..., min_length=5, max_length=50)
+
+#O Field() garante que o título da tarefa seja uma string com comprimento mínimo de 5 e máximo de 50 caracteres.
 
 @app.get("/")
 def raiz():
@@ -28,6 +28,15 @@ def criar_tarefa(dados: TarefaNova):
     return tarefa
 
 
+
 @app.get("/tarefas")
 def listar_tarefas():
     return tarefas
+
+
+@app.get("/tarefas/{tarefa_id}")
+def buscar_tarefas(tarefa_id: int):
+    for tarefa in tarefas:
+        if tarefa["id"] == tarefa_id:
+            return tarefa
+    raise HTTPException(status_code=404, detail="Tarefa não encontrada")
