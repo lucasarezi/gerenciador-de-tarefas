@@ -29,7 +29,7 @@ Envie uma requisição `POST /tarefas` com um título entre 5 e 50 caracteres:
 
 ```json
 {
-  "titulo": "Lavar a casa"
+  "titulo": "Organizar Casa"
 }
 ```
 
