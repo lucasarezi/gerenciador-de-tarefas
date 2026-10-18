@@ -40,3 +40,23 @@ def buscar_tarefas(tarefa_id: int):
         if tarefa["id"] == tarefa_id:
             return tarefa
     raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+
+
+@app.patch("/tarefas/{tarefa_id}")
+def atualizar_tarefa(tarefa_id: int, dados: TarefaNova):
+    for tarefa in tarefas:
+        if tarefa["id"] == tarefa_id:
+            tarefa["titulo"] = dados.titulo
+            return tarefa
+    raise HTTPException(status_code=404, detail="Tarefa não encontrada")
+
+
+
+@app.delete("/tarefas/{tarefa_id}")
+def deletar_tarefa(tarefa_id: int):
+    for tarefa in tarefas:
+        if tarefa["id"] == tarefa_id:
+            tarefas.remove(tarefa)
+            return {"mensagem": "Tarefa deletada com sucesso"}
+    raise HTTPException(status_code=404, detail="Tarefa não encontrada")
